@@ -1,0 +1,21 @@
+﻿@page
+@model ManPass1.Pages.VaultModel
+
+@{
+    ViewData["Title"] = "Vault";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Your Vault</h2>
+
+        <p class="text-muted">Welcome, @User.Identity?.Name.</p>
+        </div>
+        <a asp-page="/AddCredential"
+           class="btn btn-primary">
+            Add Credential
+        </a>
+    </div>
+    <p>Your saved passwords will appear here.</p>
+</div>
