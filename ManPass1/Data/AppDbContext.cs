@@ -12,5 +12,7 @@ namespace ManPass1.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Credential> Credentials { get; set; }
+
+        public DbSet<PersonalDetail> PersonalDetails { get; set; }
     }
 }

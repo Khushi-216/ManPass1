@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "ManPass1",
+  "version": "1.0",
+  "description": "ManPass1 Password Manager Extension",
+
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "https://localhost/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ManPass1"
+  }
+}

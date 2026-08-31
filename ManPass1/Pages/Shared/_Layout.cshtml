@@ -26,12 +26,24 @@
 
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
+                            <li class="nav-item ms-auto">
+                                <span class="nav-link text-dark">
+                                    Hi, @User.Identity?.Name
+                                </span>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-page="/Vault">Vault</a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-page="/Logout">Logout</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark"
+                                   asp-page="/PersonalDetails">
+                                    Personal Details
+                                </a>
                             </li>
                         }
                         else
