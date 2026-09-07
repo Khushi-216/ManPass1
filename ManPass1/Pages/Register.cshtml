@@ -1,45 +1,42 @@
-﻿@page
+@page
 @model ManPass1.Pages.RegisterModel
 
 @{
     ViewData["Title"] = "Register";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
+<section class="auth-wrap">
+    <div class="form-card auth-card">
+        <div class="eyebrow">New Vault</div>
+        <h1>Create your account</h1>
+        <p class="form-intro">Start with a private vault for the logins you use every day.</p>
 
-            <h2 class="mb-4">Create Account</h2>
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
 
-            <form method="post">
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
 
-                <div class="mb-3">
-                    <label asp-for="Name" class="form-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
 
-                <div class="mb-3">
-                    <label asp-for="Email" class="form-label"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Password" class="form-label"></label>
-                    <input asp-for="Password" class="form-control" type="password" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-
-                <button type="submit" class="btn btn-primary">
-                    Create Account
-                </button>
-
-            </form>
-
-        </div>
+            <button type="submit" class="btn btn-primary w-100">
+                Create Account
+            </button>
+        </form>
     </div>
-</div>
+</section>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

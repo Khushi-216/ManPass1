@@ -1,10 +1,39 @@
-﻿@page
+@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome Khushijiiieieieiieie</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="home-hero">
+    <article class="feature-box hero-feature feature-one">
+        <span class="feature-icon">01</span>
+        <h3>Encrypted Vault</h3>
+        <p>Your passwords are stored encrypted and shown only when you ask.</p>
+    </article>
+
+    <article class="feature-box hero-feature feature-two">
+        <span class="feature-icon">02</span>
+        <h3>Autofill</h3>
+        <p>Fill saved usernames and passwords from the extension in a click.</p>
+    </article>
+
+    <article class="feature-box hero-feature feature-three">
+        <span class="feature-icon">03</span>
+        <h3>Save New Logins</h3>
+        <p>After a successful sign-in, ManPass1 can ask whether to save it.</p>
+    </article>
+
+    <div class="hero-copy">
+        <div class="eyebrow">Secure today. Easier tomorrow.</div>
+        <h1>Store, protect, and autofill your passwords securely.</h1>
+        <p>
+            ManPass1 keeps your credentials organized in a private vault and brings
+            the right login to the right website when you need it.
+        </p>
+
+        <div class="hero-actions">
+            <a asp-page="/Register" class="btn btn-primary">Create Vault</a>
+            <a asp-page="/Login" class="btn btn-outline-primary">Log In</a>
+        </div>
+    </div>
+</section>

@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using ManPass1.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ManPass1.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,15 +20,39 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<PasswordEncryptionService>();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+
     .AddCookie(options =>
     {
         options.LoginPath = "/Login";
         options.AccessDeniedPath = "/AccessDenied";
+
         options.Cookie.SameSite = SameSiteMode.None;
         options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    });
+    })
 
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        var jwt = builder.Configuration.GetSection("Jwt");
+
+        options.TokenValidationParameters =
+            new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+
+                ValidIssuer = jwt["Issuer"],
+                ValidAudience = jwt["Audience"],
+
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwt["Key"]!)
+                    )
+            };
+    });
 
 builder.Services.AddCors(options =>
 {

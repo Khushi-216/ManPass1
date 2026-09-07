@@ -2,14 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ManPass1.Data;
+using ManPass1.Models;
 using ManPass1.Services;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace ManPass1.Controllers
 {
     [ApiController]
     [Route("api/vault")]
-    [Authorize]
+    [Authorize(
+    AuthenticationSchemes =
+        JwtBearerDefaults.AuthenticationScheme
+)]
     public class VaultApiController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -78,5 +83,91 @@ namespace ManPass1.Controllers
                 )
             });
         }
+
+        [HttpPost("credential")]
+        public async Task<IActionResult> SaveCredential(
+            SaveCredentialRequest request)
+        {
+            string? userIdValue =
+                User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userIdValue == null)
+                return Unauthorized();
+
+            if (
+                string.IsNullOrWhiteSpace(request.Website) ||
+                string.IsNullOrWhiteSpace(request.Username) ||
+                string.IsNullOrWhiteSpace(request.Password) ||
+                string.IsNullOrWhiteSpace(request.LoginUrl)
+            )
+            {
+                return BadRequest("Missing credential data.");
+            }
+
+            int userId = int.Parse(userIdValue);
+
+            var credential = new Credential
+            {
+                UserId = userId,
+                WebsiteName = request.Website,
+                WebsiteUrl = request.LoginUrl,
+                Username = request.Username,
+                EncryptedPassword =
+                    _encryptionService.Encrypt(
+                        request.Password
+                    )
+            };
+
+            _context.Credentials.Add(credential);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                credential.Id
+            });
+        }
+
+        [HttpPost("credential/exists")]
+        public async Task<IActionResult> CredentialExists(
+            SaveCredentialRequest request)
+        {
+            string? userIdValue =
+                User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userIdValue == null)
+                return Unauthorized();
+
+            int userId = int.Parse(userIdValue);
+
+            var credentials = await _context.Credentials
+                .Where(c =>
+                    c.UserId == userId &&
+                    c.WebsiteName == request.Website &&
+                    c.Username == request.Username)
+                .ToListAsync();
+
+            bool exists =
+                credentials.Any(c =>
+                    _encryptionService.Decrypt(
+                        c.EncryptedPassword
+                    ) == request.Password);
+
+            return Ok(new
+            {
+                Exists = exists
+            });
+        }
+    }
+
+    public class SaveCredentialRequest
+    {
+        public string Website { get; set; } = "";
+
+        public string Username { get; set; } = "";
+
+        public string Password { get; set; } = "";
+
+        public string LoginUrl { get; set; } = "";
     }
 }

@@ -2,7 +2,6 @@
   "manifest_version": 3,
   "name": "ManPass1",
   "version": "1.0",
-  "description": "ManPass1 Password Manager Extension",
 
   "permissions": [
     "activeTab",
@@ -11,8 +10,14 @@
   ],
 
   "host_permissions": [
-    "https://localhost/*"
+    "https://localhost/*",
+    "http://*/*",
+    "https://*/*"
   ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
 
   "content_scripts": [
     {

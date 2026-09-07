@@ -3,6 +3,83 @@
 const statusDiv = document.getElementById("status");
 const credentialsDiv = document.getElementById("credentials");
 const currentSiteDiv = document.getElementById("currentSite");
+const loginSection =
+    document.getElementById("loginSection");
+
+const emailInput =
+    document.getElementById("email");
+
+const passwordInput =
+    document.getElementById("password");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const loginError =
+    document.getElementById("loginError");
+
+
+loginButton.addEventListener(
+    "click",
+    async () => {
+
+        loginError.textContent = "";
+
+
+        const result =
+            await chrome.runtime.sendMessage({
+                type: "LOGIN",
+                email: emailInput.value,
+                password: passwordInput.value
+            });
+
+
+        if (!result || !result.success) {
+
+            loginError.textContent =
+                "Invalid email or password.";
+
+            return;
+        }
+
+
+        loginSection.style.display =
+            "none";
+
+        await loadCredentials();
+    }
+);
+
+
+async function startExtension() {
+
+    const stored =
+        await chrome.storage.local.get(
+            "manpassToken"
+        );
+
+
+    if (stored.manpassToken) {
+
+        loginSection.style.display =
+            "none";
+
+        await loadCredentials();
+
+        return;
+    }
+
+
+    loginSection.style.display =
+        "block";
+
+    credentialsDiv.innerHTML =
+        "";
+
+    statusDiv.textContent =
+        "Login to ManPass1.";
+}
+
 
 async function getCurrentTab() {
 
@@ -31,20 +108,32 @@ async function loadCredentials() {
         currentSiteDiv.textContent =
             `Current site: ${currentUrl.hostname}`;
 
-        const response = await fetch(
-            `${API_BASE}/api/vault/credentials`,
-            {
-                credentials: "include"
-            }
-        );
+        const result =
+            await chrome.runtime.sendMessage({
+                type: "GET_CREDENTIALS"
+            });
 
-        if (response.status === 401) {
+        if (!result || !result.success) {
+
+            if (result?.error === "NOT_LOGGED_IN") {
+
+                loginSection.style.display =
+                    "block";
+
+                statusDiv.textContent =
+                    "Please login to ManPass1 first.";
+
+                return;
+            }
+
             statusDiv.textContent =
-                "Please login to ManPass1 first.";
+                "Unable to load saved credentials.";
+
             return;
         }
 
-        const credentials = await response.json();
+        const credentials =
+            result.data;
 
         const matchingCredentials =
             credentials.filter(credential => {
@@ -153,15 +242,14 @@ async function autofillCredential(id) {
 
     try {
 
-        const response = await fetch(
-            `${API_BASE}/api/vault/credential/${id}`,
-            {
-                credentials: "include"
-            }
-        );
+        const result =
+            await chrome.runtime.sendMessage({
+                type: "GET_CREDENTIAL",
+                id: id
+            });
 
 
-        if (!response.ok) {
+        if (!result || !result.success) {
 
             statusDiv.textContent =
                 "Could not retrieve credential.";
@@ -171,27 +259,12 @@ async function autofillCredential(id) {
 
 
         const credential =
-            await response.json();
+            result.data;
 
 
         const tab =
             await getCurrentTab();
 
-
-        await chrome.storage.session.set({
-
-            pendingCredential: {
-                username:
-                    credential.username,
-
-                password:
-                    credential.password,
-
-                websiteUrl:
-                    credential.websiteUrl
-            }
-
-        });
 
 
         await chrome.tabs.sendMessage(
@@ -220,4 +293,4 @@ async function autofillCredential(id) {
     }
 }
 
-loadCredentials();
+startExtension();

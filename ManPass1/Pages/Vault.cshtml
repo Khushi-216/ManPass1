@@ -1,117 +1,88 @@
-﻿@page
+@page
 @model ManPass1.Pages.VaultModel
 
 @{
     ViewData["Title"] = "Vault";
 }
 
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h2>Your Vault</h2>
-
-        <p class="text-muted">Welcome, @User.Identity?.Name.
-        </p>
-        </div>
-        <a asp-page="/AddCredential"
-           class="btn btn-primary">
-            Add Credential
-        </a>
+<section class="page-header vault-header">
+    <div>
+        <div class="eyebrow">Private Vault</div>
+        <h1>Your saved logins</h1>
+        <p>Welcome, @User.Identity?.Name. Search, open, and manage your credentials from one place.</p>
     </div>
-    <form method="get" class="mb-4">
 
-        <div class="input-group">
+    <a asp-page="/AddCredential" class="btn btn-primary">Add Credential</a>
+</section>
 
-            <input asp-for="SearchTerm"
-                   class="form-control"
-                   placeholder="Search website or username..." />
+<form method="get" class="vault-search">
+    <input asp-for="SearchTerm"
+           class="form-control"
+           placeholder="Search website or username..." />
 
-            <button type="submit"
-                    class="btn btn-outline-primary">
-                Search
-            </button>
+    <button type="submit" class="btn btn-primary">Search</button>
 
-            <a asp-page="/Vault"
-               class="btn btn-outline-secondary">
-                Clear
-            </a>
+    <a asp-page="/Vault" class="btn btn-outline-secondary">Clear</a>
+</form>
 
-        </div>
-
-    </form>
-    @if (Model.Credentials.Count == 0)
-    {
-        <div class="alert alert-secondary">
-            You don't have any saved credentials yet.
-        </div>
-    }
-    else
-    {
-        <div class="row">
-
-            @foreach (var credential in Model.Credentials)
-            {
-                <div class="col-md-6 col-lg-4 mb-4">
-
-                    <div class="card h-100 shadow-sm">
-
-                        <div class="card-body">
-
-                            <h5 class="card-title">
-                                @credential.WebsiteName
-                            </h5>
-
-                            <p class="card-text mb-1">
-                                <strong>Username:</strong>
-                                @credential.Username
-                            </p>
-
-                            @if (!string.IsNullOrWhiteSpace(credential.WebsiteUrl))
-                            {
-                                <p class="card-text">
-
-                                    <a href="@credential.WebsiteUrl"
-                                       target="_blank">
-                                        Visit Website
-                                    </a>
-
-                                </p>
-                            }
-
-                            <p class="card-text">
-                                <strong>Password:</strong>
-                                ••••••••••••
-                            </p>
-
-                            <div class="mt-3">
-
-                                <a asp-page="/ViewCredential"
-                                   asp-route-id="@credential.Id"
-                                   class="btn btn-sm btn-outline-primary">
-                                    View
-                                </a>
-
-                                <a asp-page="/EditCredential"
-                                   asp-route-id="@credential.Id"
-                                   class="btn btn-sm btn-outline-secondary">
-                                    Edit
-                                </a>
-
-                                <a asp-page="/DeleteCredential"
-                                   asp-route-id="@credential.Id"
-                                   class="btn btn-sm btn-outline-danger">
-                                    Delete
-                                </a>
-
-                            </div>
-
-                        </div>
-
+@if (Model.Credentials.Count == 0)
+{
+    <div class="empty-state">
+        <h2>No saved credentials yet</h2>
+        <p>Add your first login and ManPass1 will keep it ready for autofill.</p>
+        <a asp-page="/AddCredential" class="btn btn-primary">Add Credential</a>
+    </div>
+}
+else
+{
+    <div class="vault-grid">
+        @foreach (var credential in Model.Credentials)
+        {
+            <article class="vault-card">
+                <div class="vault-card-top">
+                    <span class="vault-logo">
+                        @credential.WebsiteName.Substring(0, 1).ToUpper()
+                    </span>
+                    <div>
+                        <h2>@credential.WebsiteName</h2>
+                        <p>@credential.Username</p>
                     </div>
-
                 </div>
-            }
 
-        </div>
-    }
-</div>
+                <div class="credential-field">
+                    <span>Password</span>
+                    <strong>••••••••••••</strong>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(credential.WebsiteUrl))
+                {
+                    <a href="@credential.WebsiteUrl"
+                       target="_blank"
+                       class="site-link">
+                        Visit website
+                    </a>
+                }
+
+                <div class="card-actions">
+                    <a asp-page="/ViewCredential"
+                       asp-route-id="@credential.Id"
+                       class="btn btn-sm btn-outline-primary">
+                        View
+                    </a>
+
+                    <a asp-page="/EditCredential"
+                       asp-route-id="@credential.Id"
+                       class="btn btn-sm btn-outline-secondary">
+                        Edit
+                    </a>
+
+                    <a asp-page="/DeleteCredential"
+                       asp-route-id="@credential.Id"
+                       class="btn btn-sm btn-outline-danger">
+                        Delete
+                    </a>
+                </div>
+            </article>
+        }
+    </div>
+}
