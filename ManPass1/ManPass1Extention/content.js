@@ -1,4 +1,4 @@
-﻿let currentCredentials = [];
+let currentCredentials = [];
 let suggestionBox = null;
 let selectedCredential = null;
 
@@ -89,7 +89,7 @@ async function loadCredentials() {
         if (!result || !result.success) {
 
             console.error(
-                "ManPass1 error:",
+                "WeRemember error:",
                 result?.error
             );
 
@@ -138,7 +138,7 @@ async function loadCredentials() {
     catch (error) {
 
         console.error(
-            "ManPass1 error:",
+            "WeRemember error:",
             error
         );
 
@@ -205,7 +205,7 @@ function showSuggestions(input) {
         document.createElement("div");
 
     title.textContent =
-        "ManPass1";
+        "WeRemember";
 
     title.style.fontWeight =
         "800";
@@ -343,7 +343,7 @@ async function useCredential(credential) {
     catch (error) {
 
         console.error(
-            "ManPass1 autofill failed:",
+            "WeRemember autofill failed:",
             error
         );
 
@@ -397,13 +397,13 @@ function attachToInputs() {
     inputs.forEach(input => {
 
         if (
-            input.dataset.manpassAttached
+            input.dataset.werememberAttached
         ) {
             return;
         }
 
 
-        input.dataset.manpassAttached =
+        input.dataset.werememberAttached =
             "true";
 
 
@@ -510,7 +510,7 @@ window.addEventListener(
 );
 
 
-async function initializeManPass1() {
+async function initializeWeRemember() {
 
     await loadCredentials();
 
@@ -519,7 +519,7 @@ async function initializeManPass1() {
 }
 
 
-initializeManPass1();
+initializeWeRemember();
 
 // ======================================================
 // NEW LOGIN DETECTION
@@ -655,7 +655,7 @@ async function captureLogin(form) {
         if (!result || !result.success) {
 
             console.error(
-                "ManPass1 login capture failed:",
+                "WeRemember login capture failed:",
                 result?.message ??
                 "No response from extension background worker."
             );
@@ -666,7 +666,7 @@ async function captureLogin(form) {
     catch (error) {
 
         console.error(
-            "ManPass1 login capture failed. Reload this tab if the extension was just reloaded:",
+            "WeRemember login capture failed. Reload this tab if the extension was just reloaded:",
             error
         );
 
@@ -772,7 +772,7 @@ function showSavePasswordPopup(
     // Prevent duplicate popup
     if (
         document.getElementById(
-            "manpass-save-popup"
+            "weremember-save-popup"
         )
     ) {
         return;
@@ -784,42 +784,42 @@ function showSavePasswordPopup(
 
 
     popup.id =
-        "manpass-save-popup";
+        "weremember-save-popup";
 
 
     popup.innerHTML = `
 
-        <div class="manpass-save-title">
-            <span class="manpass-save-icon">M</span>
-            <span>ManPass1</span>
+        <div class="weremember-save-title">
+            <span class="weremember-save-icon">M</span>
+            <span>WeRemember</span>
         </div>
 
-        <div class="manpass-save-question">
+        <div class="weremember-save-question">
             Save login for
             <strong>
-                ${escapeManPassHtml(
+                ${escapeWeRememberHtml(
         pendingLogin.website
     )}
             </strong>?
         </div>
 
-        <div class="manpass-save-user">
-            ${escapeManPassHtml(
+        <div class="weremember-save-user">
+            ${escapeWeRememberHtml(
         pendingLogin.username
     )}
         </div>
 
-        <div class="manpass-save-actions">
+        <div class="weremember-save-actions">
 
             <button
-                id="manpass-not-now"
+                id="weremember-not-now"
                 type="button"
             >
                 Not now
             </button>
 
             <button
-                id="manpass-save-login"
+                id="weremember-save-login"
                 type="button"
             >
                 Save
@@ -881,7 +881,7 @@ function showSavePasswordPopup(
 
     const title =
         popup.querySelector(
-            ".manpass-save-title"
+            ".weremember-save-title"
         );
 
 
@@ -913,13 +913,13 @@ function showSavePasswordPopup(
 
     const question =
         popup.querySelector(
-            ".manpass-save-question"
+            ".weremember-save-question"
         );
 
 
     const icon =
         popup.querySelector(
-            ".manpass-save-icon"
+            ".weremember-save-icon"
         );
 
 
@@ -977,7 +977,7 @@ function showSavePasswordPopup(
 
     const user =
         popup.querySelector(
-            ".manpass-save-user"
+            ".weremember-save-user"
         );
 
 
@@ -1000,7 +1000,7 @@ function showSavePasswordPopup(
 
     const actions =
         popup.querySelector(
-            ".manpass-save-actions"
+            ".weremember-save-actions"
         );
 
 
@@ -1023,13 +1023,13 @@ function showSavePasswordPopup(
 
     const notNow =
         popup.querySelector(
-            "#manpass-not-now"
+            "#weremember-not-now"
         );
 
 
     const save =
         popup.querySelector(
-            "#manpass-save-login"
+            "#weremember-save-login"
         );
 
 
@@ -1165,7 +1165,7 @@ function showSavePasswordPopup(
 
                     alert(
                         result?.message ??
-                        "ManPass1 could not save this login."
+                        "WeRemember could not save this login."
                     );
 
                 }
@@ -1192,7 +1192,7 @@ function showSavePasswordPopup(
 
 }
 
-function escapeManPassHtml(value) {
+function escapeWeRememberHtml(value) {
 
     const div =
         document.createElement("div");
@@ -1277,7 +1277,7 @@ async function checkForPendingLogin() {
         ) {
 
             console.log(
-                "ManPass1: login form still visible, not asking to save yet."
+                "WeRemember: login form still visible, not asking to save yet."
             );
 
             return;

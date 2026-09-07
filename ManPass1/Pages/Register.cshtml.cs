@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using ManPass1.Data;
-using ManPass1.Models;
+using WeRemember.Data;
+using WeRemember.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace ManPass1.Pages
+namespace WeRemember.Pages
 {
     public class RegisterModel : PageModel
     {

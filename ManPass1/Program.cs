@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using ManPass1.Data;
+using WeRemember.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using ManPass1.Services;
+using WeRemember.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

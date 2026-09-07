@@ -1,13 +1,13 @@
-﻿const API_BASE = "https://localhost:7189";
+const API_BASE = "https://localhost:7189";
 
 async function getToken() {
 
     const data =
         await chrome.storage.local.get(
-            "manpassToken"
+            "werememberToken"
         );
 
-    return data.manpassToken;
+    return data.werememberToken;
 }
 
 chrome.runtime.onMessage.addListener(
@@ -47,7 +47,7 @@ chrome.runtime.onMessage.addListener(
                 .then(async data => {
 
                     await chrome.storage.local.set({
-                        manpassToken: data.token
+                        werememberToken: data.token
                     });
 
                     sendResponse({
@@ -203,7 +203,7 @@ chrome.runtime.onMessage.addListener(
         if (message.type === "LOGOUT") {
 
             chrome.storage.local.remove(
-                "manpassToken"
+                "werememberToken"
             );
 
             sendResponse({
@@ -267,7 +267,7 @@ chrome.runtime.onMessage.addListener(
 
 
                 console.log(
-                    "ManPass1: pending login stored"
+                    "WeRemember: pending login stored"
                 );
 
 
@@ -626,7 +626,7 @@ chrome.runtime.onMessage.addListener(
                             false,
 
                         message:
-                            "Please login to ManPass1 first."
+                            "Please login to WeRemember first."
 
                     });
 
@@ -710,7 +710,7 @@ chrome.runtime.onMessage.addListener(
             catch (error) {
 
                 console.error(
-                    "ManPass1 credential save failed:",
+                    "WeRemember credential save failed:",
                     error
                 );
 

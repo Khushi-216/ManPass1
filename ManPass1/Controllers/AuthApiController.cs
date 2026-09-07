@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using ManPass1.Data;
+using WeRemember.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ManPass1.Controllers
+namespace WeRemember.Controllers
 {
     [ApiController]
     [Route("api/auth")]

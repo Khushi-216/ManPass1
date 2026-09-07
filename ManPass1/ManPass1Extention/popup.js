@@ -1,4 +1,4 @@
-﻿const API_BASE = "https://localhost:7189";
+const API_BASE = "https://localhost:7189";
 
 const statusDiv = document.getElementById("status");
 const credentialsDiv = document.getElementById("credentials");
@@ -55,11 +55,11 @@ async function startExtension() {
 
     const stored =
         await chrome.storage.local.get(
-            "manpassToken"
+            "werememberToken"
         );
 
 
-    if (stored.manpassToken) {
+    if (stored.werememberToken) {
 
         loginSection.style.display =
             "none";
@@ -77,7 +77,7 @@ async function startExtension() {
         "";
 
     statusDiv.textContent =
-        "Login to ManPass1.";
+        "Login to WeRemember.";
 }
 
 
@@ -121,7 +121,7 @@ async function loadCredentials() {
                     "block";
 
                 statusDiv.textContent =
-                    "Please login to ManPass1 first.";
+                    "Please login to WeRemember first.";
 
                 return;
             }
@@ -233,7 +233,7 @@ async function loadCredentials() {
         console.error(error);
 
         statusDiv.textContent =
-            "Unable to connect to ManPass1.";
+            "Unable to connect to WeRemember.";
     }
 }
 

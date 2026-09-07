@@ -42,7 +42,7 @@ a:hover {
   max-width: 1180px;
 }
 
-.manpass-nav {
+.weremember-nav {
   position: sticky;
   top: 0;
   z-index: 20;
@@ -519,7 +519,7 @@ a:hover {
 }
 
 @media (max-width: 640px) {
-  .manpass-nav {
+  .weremember-nav {
     margin-top: 0;
   }
 

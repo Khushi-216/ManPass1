@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ManPass1.Migrations
+namespace WeRemember.Migrations
 {
     /// <inheritdoc />
     public partial class AddCredentials : Migration

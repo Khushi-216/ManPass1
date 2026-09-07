@@ -1,4 +1,4 @@
-﻿namespace ManPass1.Models
+namespace WeRemember.Models
 {
     public class PersonalDetail
     {

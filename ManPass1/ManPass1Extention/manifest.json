@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "ManPass1",
+  "name": "WeRemember",
   "version": "1.0",
 
   "permissions": [
@@ -34,6 +34,6 @@
 
   "action": {
     "default_popup": "popup.html",
-    "default_title": "ManPass1"
+    "default_title": "WeRemember"
   }
 }

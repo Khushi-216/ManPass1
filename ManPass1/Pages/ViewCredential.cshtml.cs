@@ -2,12 +2,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using ManPass1.Data;
-using ManPass1.Models;
-using ManPass1.Services;
+using WeRemember.Data;
+using WeRemember.Models;
+using WeRemember.Services;
 using System.Security.Claims;
 
-namespace ManPass1.Pages
+namespace WeRemember.Pages
 {
     [Authorize]
     public class ViewCredentialModel : PageModel

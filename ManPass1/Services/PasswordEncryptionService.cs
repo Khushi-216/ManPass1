@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection;
 
-namespace ManPass1.Services
+namespace WeRemember.Services
 {
     public class PasswordEncryptionService
     {

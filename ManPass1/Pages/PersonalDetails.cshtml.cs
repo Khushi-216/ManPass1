@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using ManPass1.Data;
-using ManPass1.Models;
+using WeRemember.Data;
+using WeRemember.Models;
 using System.Security.Claims;
 
-namespace ManPass1.Pages
+namespace WeRemember.Pages
 {
     [Authorize]
     public class PersonalDetailsModel : PageModel

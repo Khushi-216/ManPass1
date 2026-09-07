@@ -1,8 +1,10 @@
-# ManPass1
+# WeRemember
 
-ManPass1 is a local password-manager style web app built with ASP.NET Core Razor Pages. It also includes a Chrome extension that talks to the local web app through API endpoints.
+WeRemember is a local password-manager style web app built with ASP.NET Core Razor Pages. It also includes a Chrome extension that talks to the local web app through API endpoints.
 
 The project is meant to run on your own desktop during development. You clone it from GitHub, set up the local database, run the ASP.NET Core app, and then load the browser extension in Chrome.
+
+The GitHub repository and main folder can still be named `ManPass1`. That is only the repo/folder name. The application itself is named `WeRemember`.
 
 ## What You Need
 
@@ -109,7 +111,7 @@ Then in Chrome:
 ManPass1\ManPass1Extention
 ```
 
-The extension uses this local backend URL:
+The extension is branded as WeRemember and uses this local backend URL:
 
 ```text
 https://localhost:7189
@@ -180,7 +182,7 @@ dotnet run --project .\ManPass1\ManPass1.csproj --launch-profile https
 
 ```text
 ManPass1.slnx
-ManPass1/
+ManPass1/                   ASP.NET Core app source folder
   Controllers/              API controllers for authentication and vault data
   Data/                     Entity Framework database context
   Migrations/               Database migration files
@@ -191,6 +193,10 @@ ManPass1/
   appsettings.Development.json
   Program.cs
 ```
+
+The source folder and extension folder still use the older `ManPass1` folder names so the repository structure stays stable. Inside the app, the visible product name is `WeRemember`.
+
+The local database name and encryption purpose also keep the older internal `ManPass1` name so existing development vault data can still be read after the rename.
 
 ## Notes
 

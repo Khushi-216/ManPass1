@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ManPass1.Models;
+using Microsoft.EntityFrameworkCore;
+using WeRemember.Models;
 
-namespace ManPass1.Data
+namespace WeRemember.Data
 {
     public class AppDbContext : DbContext
     {

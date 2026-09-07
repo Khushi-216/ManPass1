@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace ManPass1.Models
+namespace WeRemember.Models
 {
     public class Credential
     {
