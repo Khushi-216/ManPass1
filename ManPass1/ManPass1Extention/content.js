@@ -473,6 +473,9 @@ document.addEventListener(
             suggestionBox &&
             !suggestionBox.contains(
                 event.target
+            ) &&
+            !event.target.closest(
+                'input[data-weremember-attached="true"]'
             )
         ) {
 

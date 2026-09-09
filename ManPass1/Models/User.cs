@@ -11,7 +11,5 @@ namespace WeRemember.Models
         public string PasswordHash { get; set; } = "";
 
         public List<Credential> Credentials { get; set; } = new();
-
-        public PersonalDetail? PersonalDetail { get; set; }
     }
 }  
